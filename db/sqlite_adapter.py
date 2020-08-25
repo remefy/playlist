@@ -40,15 +40,15 @@ class SqliteAllDBAdapter(ArtistsDBAdapter, SongsDBAdapter):
     def search_song(self, name):
         cursor = self.connection.cursor()
         rows = cursor.execute("SELECT Songs.id, Songs.title, artists.name FROM Songs "
-                             "INNER JOIN artists ON Songs.id_artist = artists.id "
-                             )
+                              "INNER JOIN artists ON Songs.id_artist = artists.id "
+                              "WHERE Songs.title LIKE ?", ['%'+name+'%']
+                              )
         songs = []
         if rows is not None:
             for row in rows:
                 song = ListOfSongs(row[1], row[2])
                 song.id = row[0]
-                if name in song.songstitle:
-                    songs.append(song)
+                songs.append(song)
             return songs
         return None
 

@@ -37,13 +37,13 @@ class SongsApp:
                 for song in songs:
                     print(song)
             elif command == "delete song":
-                bol = False
+                song_exists = False
                 id = int(input("Введите id песни: "))
                 songs = self.adapter.get_all_songs()
                 for song in songs:
                     if song.id == id:
-                        bol = True
-                if bol == True:
+                        song_exists = True
+                if song_exists == True:
                     self.adapter.delete_song(id)
                     print("Песня успешно удалена!")
                 else:
